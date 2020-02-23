@@ -1,3 +1,4 @@
+require('dotenv').config();
 
 export default {
   mode: 'universal',
@@ -29,11 +30,13 @@ export default {
   */
   plugins: [
     '~/plugins/vue-youtube',
+    '~/plugins/cookies-to-state',
   ],
   /*
   ** Nuxt.js dev-modules
   */
   buildModules: [
+    '@nuxtjs/dotenv',
   ],
   /*
   ** Nuxt.js modules
@@ -42,11 +45,22 @@ export default {
     // Doc: https://github.com/nuxt-community/modules/tree/master/packages/bulma
     '@nuxtjs/bulma',
     '@nuxtjs/axios',
+    'cookie-universal-nuxt',
   ],
-  /*
-  ** Axios module configuration
-  ** See https://axios.nuxtjs.org/options
-  */
+  env: {
+    FIREBASE_API_KEY: process.env.FIREBASE_API_KEY,
+    FIREBASE_AUTH_DOMAIN: process.env.FIREBASE_AUTH_DOMAIN,
+    FIREBASE_DATABASE_URL: process.env.FIREBASE_DATABASE_URL,
+    FIREBASE_PROJECT_ID: process.env.FIREBASE_PROJECT_ID,
+    FIREBASE_STORAGE_BUCKET: process.env.FIREBASE_STORAGE_BUCKET,
+    FIREBASE_MESSAGING_SENDER_ID: process.env.FIREBASE_MESSAGING_SENDER_ID,
+    FIREBASE_APP_ID: process.env.FIREBASE_APP_ID,
+    FIREBASE_MEASUREMENT_ID: process.env.FIREBASE_MEASUREMENT_ID,
+  },
+  // /*
+  // ** Axios module configuration
+  // ** See https://axios.nuxtjs.org/options
+  // */
   axios: {
     baseURL: 'http://localhost:8080/'
   },
