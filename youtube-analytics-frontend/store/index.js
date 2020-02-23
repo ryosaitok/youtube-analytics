@@ -8,6 +8,7 @@ export const state = () => ({
 export const actions = {
   async fetchPopularVideos({commit}, payload) {
     const client = createRequestClient(this.$axios, this.$cookies, this);
+    console.log(payload);
     const res = await client.get(payload.uri, payload.params);
     commit('mutatePopularVideos', res)
   },
@@ -23,5 +24,8 @@ export const mutations = {
 export const getters = {
   getPopularVideos(state) {
     return state.items
-  }
+  },
+  getMeta(state) {
+    return state.meta
+  },
 };
