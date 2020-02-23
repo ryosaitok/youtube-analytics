@@ -5,6 +5,7 @@ import (
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 	"github.com/sirupsen/logrus"
+	"youtube-analytics/middlewares"
 	"youtube-analytics/routes"
 )
 
@@ -21,6 +22,7 @@ func main() {
 	e := echo.New()
 	e.Use(middleware.Logger())
 	e.Use(middleware.CORS())
+	e.Use(middlewares.YouTubeService())
 	routes.Init(e)
 	e.Logger.Fatal(e.Start(":8080"))
 }
