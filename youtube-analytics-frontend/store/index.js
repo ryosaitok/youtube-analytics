@@ -71,24 +71,32 @@ export const actions = {
     const res = await client.post(payload.uri);
     commit('mutateToggleFavorite', res.is_favorite)
   },
+  async fetchFavoriteVideos({commit}, payload) {
+    const client = createRequestClient(this.$axios, this.$cookies, this);
+    const res = await client.get(payload.uri);
+    commit('mutateFavoriteVideos', res)
+  }
 };
 
 export const mutations = {
   mutatePopularVideos(state, payload) {
-    state.items = payload.items ? state.items.concat(payload.items) : []
+    state.items = payload.items ? state.items.concat(payload.items) : [];
     state.meta = payload
   },
   mutateVideo(state, payload) {
-    const params = (payload.items && payload.items.length > 0) ? payload.items[0] : {}
-    params.isFavorite = payload.isFavorite || false
+    const params = (payload.items && payload.items.length > 0) ? payload.items[0] : {};
+    params.isFavorite = payload.isFavorite || false;
     state.item = params
   },
   mutateRelatedVideos(state, payload) {
     state.relatedItems = payload.items || []
   },
   mutateSearchVideos(state, payload) {
-    state.searchItems = payload.items ? state.searchItems.concat(payload.items) : []
+    state.searchItems = payload.items ? state.searchItems.concat(payload.items) : [];
     state.searchMeta = payload
+  },
+  mutateFavoriteVideos(state, payload) {
+    state.favoriteItems = payload.items || []
   },
 
   mutateToken(state, payload) {
@@ -114,6 +122,9 @@ export const getters = {
   },
   getSearchVideos(state) {
     return state.searchItems
+  },
+  getFavoriteVideos(state) {
+    return state.favoriteItems
   },
   getSearchMeta(state) {
     return state.searchMeta
