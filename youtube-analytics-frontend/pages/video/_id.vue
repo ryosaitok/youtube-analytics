@@ -20,6 +20,17 @@
               <br/>
               {{ item.snippet.publishedAt }}
             </div>
+            <div v-if="isLoggedIn" class="level-right">
+              <a href="#" @click.prevent="toggleFavorite">
+                <span class="icon is-large">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-heart fa-stack-1x"
+                       :class="[item.isFavorite ? 'active' : 'has-text-grey-light']"
+                    ></i>
+                  </span>
+                </span>
+              </a>
+            </div>
           </div>
 
           <hr>
@@ -69,12 +80,23 @@
       relatedItems() {
         return this.$store.getters.getRelatedVideos
       },
+      isLoggedIn() {
+        return this.$store.getters.isLoggedIn
+      }
+    },
+
+    methods: {
+      async toggleFavorite() {
+        await this.$store.dispatch('toggleFavorite', {
+          uri: ROUTES.POST.TOGGLE_FAVORITE.replace(':id', this.$route.params.id)
+        })
+      }
     },
 
     async fetch({store, route}) {
       await store.dispatch('findVideo', {
         uri: ROUTES.GET.VIDEO.replace(':id', route.params.id),
-      })
+      });
       await store.dispatch('fetchRelatedVideos', {
         uri: ROUTES.GET.RELATED.replace(':id', route.params.id),
       })
@@ -89,5 +111,8 @@
   }
   .video-player {
     max-width: 880px;
+  }
+  .fa-heart.active {
+    color: #FF1493;
   }
 </style>
