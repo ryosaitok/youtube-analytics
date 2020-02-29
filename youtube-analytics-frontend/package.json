@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "nuxt",
     "build": "nuxt build",
-    "start": "nuxt start --hostname 34.229.113.176",
+    "start": "nuxt start --hostname 0.0.0.0",
     "generate": "nuxt generate"
   },
   "dependencies": {
